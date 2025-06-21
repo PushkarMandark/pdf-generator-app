@@ -908,6 +908,10 @@ body {
   padding-bottom: 0px;
 }
 
+.pt-4{
+  padding-top: 1rem;
+}
+
 .text-left{
   text-align: left;
 }
@@ -947,6 +951,11 @@ body {
 
 .text-\[120px\]{
   font-size: 120px;
+}
+
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .font-bold{
