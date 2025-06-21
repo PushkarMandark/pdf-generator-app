@@ -560,6 +560,22 @@ body {
   font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
 }
 
+.absolute{
+  position: absolute;
+}
+
+.relative{
+  position: relative;
+}
+
+.bottom-0{
+  bottom: 0px;
+}
+
+.right-0{
+  right: 0px;
+}
+
 .mb-2{
   margin-bottom: 0.5rem;
 }
@@ -576,6 +592,14 @@ body {
   margin-bottom: 2rem;
 }
 
+.mt-20{
+  margin-top: 5rem;
+}
+
+.mt-6{
+  margin-top: 1.5rem;
+}
+
 .flex{
   display: flex;
 }
@@ -588,8 +612,20 @@ body {
   display: grid;
 }
 
-.h-screen{
-  height: 100vh;
+.aspect-square{
+  aspect-ratio: 1 / 1;
+}
+
+.h-auto{
+  height: auto;
+}
+
+.min-h-screen{
+  min-height: 100vh;
+}
+
+.w-1\/2{
+  width: 50%;
 }
 
 .w-full{
@@ -598,6 +634,14 @@ body {
 
 .min-w-full{
   min-width: 100%;
+}
+
+.max-w-\[300px\]{
+  max-width: 300px;
+}
+
+.max-w-xl{
+  max-width: 36rem;
 }
 
 .grid-cols-1{
@@ -618,10 +662,6 @@ body {
 
 .items-baseline{
   align-items: baseline;
-}
-
-.justify-center{
-  justify-content: center;
 }
 
 .justify-between{
@@ -660,12 +700,12 @@ body {
   border-radius: 0.5rem;
 }
 
-.border{
-  border-width: 1px;
+.rounded-sm{
+  border-radius: 0.125rem;
 }
 
-.border-4{
-  border-width: 4px;
+.border{
+  border-width: 1px;
 }
 
 .border-b{
@@ -684,11 +724,6 @@ body {
 .border-primary{
   --tw-border-opacity: 1;
   border-color: rgb(44 191 103 / var(--tw-border-opacity, 1));
-}
-
-.border-primary-variant-dark{
-  --tw-border-opacity: 1;
-  border-color: rgb(128 217 164 / var(--tw-border-opacity, 1));
 }
 
 .bg-gray-100{
@@ -711,9 +746,9 @@ body {
   background-color: rgb(220 252 231 / var(--tw-bg-opacity, 1));
 }
 
-.bg-primary{
+.bg-green-600{
   --tw-bg-opacity: 1;
-  background-color: rgb(44 191 103 / var(--tw-bg-opacity, 1));
+  background-color: rgb(22 163 74 / var(--tw-bg-opacity, 1));
 }
 
 .bg-primary-variant-light{
@@ -746,10 +781,6 @@ body {
 
 .p-6{
   padding: 1.5rem;
-}
-
-.p-8{
-  padding: 2rem;
 }
 
 .px-2{
@@ -794,8 +825,8 @@ body {
   line-height: 2.25rem;
 }
 
-.text-5xl{
-  font-size: 3rem;
+.text-6xl{
+  font-size: 3.75rem;
   line-height: 1;
 }
 
@@ -818,6 +849,10 @@ body {
   font-weight: 700;
 }
 
+.font-medium{
+  font-weight: 500;
+}
+
 .font-semibold{
   font-weight: 600;
 }
@@ -828,6 +863,11 @@ body {
 
 .leading-tight{
   line-height: 1.25;
+}
+
+.text-black{
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
 .text-gray-500{

@@ -6,13 +6,16 @@
     <title><%= data.reportTitle %></title>
     <style>
         <%= locals.css %>
+        @page:first {
+            margin: 0;
+        }
     </style>
 </head>
 <body class="bg-white">
     <main>
         <% /* Cover Page */ %>
         <div id="cover-page">
-            <%- include('coverPage.ejs', { data: data }); %>
+            <%- include('coverPage.ejs', { data: data, orbImage: orbImage }); %>
         </div>
 
         <% /* Table of Contents */ %>

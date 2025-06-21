@@ -59,7 +59,31 @@ const fetchDataForReport = (reportId) => {
           mpn: "R5F10BLGCKFB#15",
           title: "MPN Analysis: R5F10BLGCKFB#15",
           summary: "Detailed analysis for R5F10BLGCKFB#15, focusing on its NRND status and high risk implications."
-        }
+        },
+          {
+              id: "mpn-222b3c4d5e6f7g8h9i",
+              mpn: "DTC114EU3HZGT106",
+              title: "MPN Analysis: DTC114EU3HZGT106",
+              summary: "Detailed analysis for DTC114EU3HZGT106 covering pricing, availability, and potential alternatives."
+          },
+          {
+              id: "mpn-r5f10b12sslgckfb15",
+              mpn: "R5F10BLGCKFB#15",
+              title: "MPN Analysis: R5F10BLGCKFB#15",
+              summary: "Detailed analysis for R5F10BLGCKFB#15, focusing on its NRND status and high risk implications."
+          },
+          {
+              id: "mpn-dtc114eu3hsadasw22zgt106",
+              mpn: "DTC114EU3HZGT106",
+              title: "MPN Analysis: DTC114EU3HZGT106",
+              summary: "Detailed analysis for DTC114EU3HZGT106 covering pricing, availability, and potential alternatives."
+          },
+          {
+              id: "mpn-r5f10blgckfb1sadasd225",
+              mpn: "R5F10BLGCKFB#15",
+              title: "MPN Analysis: R5F10BLGCKFB#15",
+              summary: "Detailed analysis for R5F10BLGCKFB#15, focusing on its NRND status and high risk implications."
+          },
       ]
     };
 };
@@ -109,12 +133,18 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
         const cssPath = path.join(__dirname, 'public', 'output.css');
         const css = fs.readFileSync(cssPath, 'utf-8');
 
+        // Read image and convert to Base64 for embedding
+        const imagePath = path.join(__dirname, 'public', 'images', 'onebuySphare.png');
+        const imageBase64 = fs.readFileSync(imagePath, 'base64');
+        const imageSrc = `data:image/png;base64,${imageBase64}`;
+
         // Render EJS template
         const templatePath = path.join(__dirname, 'views', 'reportTemplate.ejs');
         const html = await ejs.renderFile(templatePath, { 
             data: reportData, 
             pages: pages,
-            css: css
+            css: css,
+            orbImage: imageSrc
         });
 
         // Generate PDF

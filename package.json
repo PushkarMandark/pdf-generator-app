@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "build:css": "tailwindcss -i ./src/input.css -o ./public/output.css",
-    "watch:css": "tailwindcss -i ./src/input.css -o ./public/output.css --watch"
+    "watch:css": "tailwindcss -i ./src/input.css -o ./public/output.css --watch",
+    "dev": "concurrently \"npm run watch:css\" \"nodemon index.js\""
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,8 @@
   "devDependencies": {
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.5"
+    "tailwindcss": "^3.3.5",
+    "nodemon": "^3.0.1",
+    "concurrently": "^8.2.2"
   }
 }
