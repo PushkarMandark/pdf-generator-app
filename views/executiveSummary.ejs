@@ -1,0 +1,30 @@
+<h1 class="text-3xl font-bold text-primary mb-6 border-b-2 pb-2 border-primary">Executive Summary</h1>
+<div class="grid grid-cols-2 gap-6 mb-8">
+    <div class="bg-primary-variant-light p-4 rounded-lg text-center shadow">
+        <p class="text-sm text-gray-600">MPNs Analysed</p>
+        <p class="text-2xl font-bold text-primary"><%= data.executiveSummary.mpnsAnalysed %></p>
+    </div>
+    <div class="bg-primary-variant-light p-4 rounded-lg text-center shadow">
+        <p class="text-sm text-gray-600">Total Value Analysed</p>
+        <p class="text-2xl font-bold text-primary"><%= data.executiveSummary.valueAnalysed %></p>
+    </div>
+    <div class="bg-green-100 p-4 rounded-lg text-center shadow">
+        <p class="text-sm text-gray-600">Max Savings Unlocked</p>
+        <p class="text-2xl font-bold text-green-700"><%= data.executiveSummary.savingsUnlocked %></p>
+    </div>
+    <div class="bg-green-100 p-4 rounded-lg text-center shadow">
+        <p class="text-sm text-gray-600">BOM Savings Percentage</p>
+        <p class="text-2xl font-bold text-green-700"><%= data.executiveSummary.bomSavingsPercentage %></p>
+    </div>
+</div>
+<div class="bg-gray-50 p-6 rounded-lg page-break-inside-avoid">
+    <h2 class="text-xl font-bold text-text-color mb-4">Summary Metrics</h2>
+    <ul class="space-y-3">
+        <% data.executiveSummary.summaryMetrics.forEach(metric => { %>
+            <li class="flex justify-between border-b pb-2">
+                <span class="text-gray-600"><%= metric.label %></span>
+                <span class="font-bold text-text-color"><%= metric.value %></span>
+            </li>
+        <% }); %>
+    </ul>
+</div>

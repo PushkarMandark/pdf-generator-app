@@ -1,0 +1,24 @@
+{
+  "name": "pdf-generator-app",
+  "version": "1.0.0",
+  "description": "Dynamic PDF Generator with Node.js, Puppeteer, EJS, and Tailwind CSS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build:css": "tailwindcss -i ./src/input.css -o ./public/output.css",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./public/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "puppeteer": "^21.5.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5"
+  }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= data.reportTitle %></title>
+    <style>
+        <%= locals.css %>
+    </style>
+</head>
+<body class="bg-white">
+    <main>
+        <% /* Cover Page */ %>
+        <div id="cover-page">
+            <%- include('coverPage.ejs', { data: data }); %>
+        </div>
+
+        <% /* Table of Contents */ %>
+        <div id="table-of-contents" class="page-break p-12">
+            <h1 class="text-3xl font-bold text-primary mb-8">Table of Contents</h1>
+            <ul class="space-y-4 text-lg">
+                <% pages.forEach(page => { %>
+                    <li class="border-b pb-2 flex justify-between items-baseline">
+                        <a href="#<%= page.id %>" class="text-text-color hover:text-primary"><%= page.title %></a>
+                        <span class="text-gray-500"><%= page.pageNumber %></span>
+                    </li>
+                <% }); %>
+            </ul>
+        </div>
+
+        <% /* Report Pages */ %>
+        <% pages.forEach(page => { %>
+            <div id="<%= page.id %>" class="page-break p-12">
+                 <%- include(page.template + '.ejs', { data: data, pageData: page.pageData || {} }); %>
+            </div>
+        <% }); %>
+    </main>
+</body>
+</html>

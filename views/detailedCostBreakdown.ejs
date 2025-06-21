@@ -1,0 +1,25 @@
+<h1 class="text-2xl font-bold text-primary mb-4">1. Detailed Cost Breakdown and Savings Opportunities</h1>
+<div class="overflow-x-auto page-break-inside-avoid">
+    <table class="min-w-full bg-white border border-gray-200">
+        <thead class="bg-gray-800 text-white">
+            <tr>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Category</th>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Current Cost</th>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Optimised Cost</th>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Savings</th>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Optimisation Strategy</th>
+            </tr>
+        </thead>
+        <tbody class="text-gray-700">
+            <% data.detailedCostBreakdown.forEach((row, index) => { %>
+                <tr class="<%= index % 2 === 0 ? 'bg-gray-100' : 'bg-white' %> <%= row.Category === 'Total' ? 'font-bold text-gray-900' : '' %>">
+                    <td class="text-left py-3 px-4"><%= row.Category %></td>
+                    <td class="text-left py-3 px-4"><%= row['Current Cost'] %></td>
+                    <td class="text-left py-3 px-4"><%= row['Optimised Cost'] %></td>
+                    <td class="text-left py-3 px-4 text-green-600"><%= row.Savings %></td>
+                    <td class="text-left py-3 px-4 text-sm"><%= row['Optimisation Strategy'] %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>

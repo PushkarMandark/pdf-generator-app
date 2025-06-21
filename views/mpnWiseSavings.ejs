@@ -1,0 +1,23 @@
+<h1 class="text-2xl font-bold text-primary mb-4">2. MPN Wise Savings</h1>
+<div class="overflow-x-auto page-break-inside-avoid">
+    <table class="min-w-full bg-white border border-gray-200">
+        <thead class="bg-gray-800 text-white">
+            <tr>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">MPN</th>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Savings (Peers)</th>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Savings (Domestic)</th>
+                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Saving (Global)</th>
+            </tr>
+        </thead>
+        <tbody class="text-gray-700">
+            <% data.mpnWiseSavings.forEach((row, index) => { %>
+                <tr class="<%= index % 2 === 0 ? 'bg-gray-100' : 'bg-white' %> <%= row.MPN.includes('TOTAL') ? 'font-bold text-gray-900' : '' %>">
+                    <td class="text-left py-3 px-4"><%= row.MPN %></td>
+                    <td class="text-left py-3 px-4"><%= row.Savings_Peers %></td>
+                    <td class="text-left py-3 px-4"><%= row.Savings_Domestic %></td>
+                    <td class="text-left py-3 px-4"><%= row.Saving_Global %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
