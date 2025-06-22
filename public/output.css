@@ -888,6 +888,10 @@ body {
   height: 12rem;
 }
 
+.h-\[300px\]{
+  height: 300px;
+}
+
 .min-h-screen{
   min-height: 100vh;
 }
@@ -998,6 +1002,10 @@ body {
 
 .w-\[100px\]{
   width: 100px;
+}
+
+.w-\[300px\]{
+  width: 300px;
 }
 
 .min-w-full{
@@ -1123,6 +1131,10 @@ body {
 
 .justify-end{
   justify-content: flex-end;
+}
+
+.justify-center{
+  justify-content: center;
 }
 
 .justify-between{
@@ -1363,6 +1375,11 @@ body {
           background-clip: text;
 }
 
+.object-contain{
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
 .p-12{
   padding: 3rem;
 }
@@ -1417,6 +1434,16 @@ body {
 .py-16{
   padding-top: 4rem;
   padding-bottom: 4rem;
+}
+
+.px-10{
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.py-8{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .pb-0{

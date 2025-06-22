@@ -171,10 +171,19 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
                 pageType: 'with-margins'  // Page with margins
             },
             {
+                id: 'about-ai2',
+                title: 'About Our AI Infrastructure',
+                template: 'aboutAI-page2',
+                pageNumber: '06',
+                level: 1,
+                pageType: 'full-bleed',
+                hideFromToc: true
+            },
+            {
                 id: 'exec-summary',
                 title: 'Executive Summary',
                 template: 'executiveSummary',
-                pageNumber: '06',
+                pageNumber: '07',
                 level: 1,
                 pageType: 'with-margins'  // Page with margins
             },
