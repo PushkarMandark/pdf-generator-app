@@ -6,37 +6,51 @@
     <title><%= data.reportTitle %></title>
     <style>
         <%= locals.css %>
-        @page:first {
+        @page :first {
             margin: 0;
+        }
+        .page-break {
+            position: relative;
+            min-height: 91vh;
+            page-break-after: always;
         }
     </style>
 </head>
 <body class="bg-white">
-    <main>
-        <% /* Cover Page */ %>
-        <div id="cover-page">
-            <%- include('coverPage.ejs', { data: data, orbImage: orbImage }); %>
-        </div>
+<main>
+    <% /* Cover Page */ %>
+    <div id="cover-page" class="page-break">
+        <%- include('coverPage.ejs', { data: data, orbImage: orbImage }); %>
+    </div>
 
-        <% /* Table of Contents */ %>
-        <div id="table-of-contents" class="page-break p-12">
-            <h1 class="text-4xl font-bold mb-8 uppercase">Table of Contents</h1>
-            <ul class="space-y-4 text-lg">
-                <% pages.forEach(page => { %>
-                    <li class="border-b pb-2 pt-4 flex justify-between items-baseline">
-                        <a href="#<%= page.id %>" class="text-text-color hover:text-primary"><%= page.title %></a>
-                        <span class="text-gray-500"><%= page.pageNumber %></span>
-                    </li>
-                <% }); %>
-            </ul>
+    <% /* Table of Contents */ %>
+    <div id="table-of-contents" class="page-break p-12">
+        <h1 class="text-4xl font-bold mb-8 uppercase">Table of Contents</h1>
+        <ul class="space-y-4 text-lg">
+            <% pages.forEach(page => { %>
+                <li class="border-b pb-2 pt-4 flex justify-between items-baseline">
+                    <a href="#<%= page.id %>" class="text-text-color hover:text-primary"><%= page.title %></a>
+                    <span class="text-gray-500"><%= page.pageNumber %></span>
+                </li>
+            <% }); %>
+        </ul>
+        <div style=" font-size: 10px; display: flex;  justify-content: space-between; position: absolute; bottom: 0; left: 0; right: 0; padding: 0 40px;">
+            <div>Page 2</div>
+            <div>Table of Contents</div>
         </div>
+    </div>
 
-        <% /* Report Pages */ %>
-        <% pages.forEach(page => { %>
-            <div id="<%= page.id %>" class="page-break p-12">
-                 <%- include(page.template + '.ejs', { data: data, pageData: page.pageData || {} }); %>
+    <% /* Report Pages */ %>
+    <% pages.forEach(page => { %>
+        <div id="<%= page.id %>" class="page-break p-12">
+            <%- include(page.template + '.ejs', { data: data, pageData: page.pageData || {} }); %>
+<!--            footer section for dynamic pages-->
+            <div style=" font-size: 10px; display: flex;  justify-content: space-between; position: absolute; bottom: 0; left: 0; right: 0; padding: 0 40px;">
+                <div>Page <%= parseInt(page.pageNumber) %></div>
+                <div><%= page.title %></div>
             </div>
-        <% }); %>
-    </main>
+        </div>
+    <% }); %>
+</main>
 </body>
 </html>

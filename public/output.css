@@ -560,6 +560,18 @@ body {
   font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
 }
 
+.visible{
+  visibility: visible;
+}
+
+.static{
+  position: static;
+}
+
+.fixed{
+  position: fixed;
+}
+
 .absolute{
   position: absolute;
 }
@@ -574,6 +586,14 @@ body {
 
 .-right-10{
   right: -2.5rem;
+}
+
+.bottom-20{
+  bottom: 5rem;
+}
+
+.isolate{
+  isolation: isolate;
 }
 
 .mb-0{
@@ -608,6 +628,10 @@ body {
   margin-top: 2rem;
 }
 
+.box-border{
+  box-sizing: border-box;
+}
+
 .flex{
   display: flex;
 }
@@ -620,8 +644,16 @@ body {
   display: grid;
 }
 
+.hidden{
+  display: none;
+}
+
 .h-\[525px\]{
   height: 525px;
+}
+
+.h-auto{
+  height: auto;
 }
 
 .min-h-screen{
@@ -630,6 +662,14 @@ body {
 
 .w-4{
   width: 1rem;
+}
+
+.w-full{
+  width: 100%;
+}
+
+.w-\[100\%\]{
+  width: 100%;
 }
 
 .min-w-full{
