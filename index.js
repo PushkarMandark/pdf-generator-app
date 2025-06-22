@@ -127,7 +127,11 @@ const generatePdf = async (htmlContent) => {
     const page = await browser.newPage();
     await page.setContent(htmlContent, {waitUntil: 'networkidle0'});
     const pdfBuffer = await page.pdf({
-        format: 'A4', printBackground: true, margin: {top: '0.5in', right: '0.5in', bottom: '0.5in', left: '0.5in'},
+        format: 'A4',
+        printBackground: true,
+        margin: '0',  // No margins by default
+        displayHeaderFooter: false,
+        preferCSSPageSize: true
     });
     await browser.close();
     return pdfBuffer;
@@ -140,31 +144,64 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
         const reportData = fetchDataForReport(reportId);
 
         // Define page structure for TOC and rendering
-        const pages = [{id: 'about-1buy', title: 'About 1BUY.AI', template: 'about1buy', pageNumber: '04', level: 1},
-            {id: 'about-ai', title: 'About Our AI Infrastructure', template: 'aboutAI', pageNumber: '05', level: 1},
-            {id: 'exec-summary', title: 'Executive Summary', template: 'executiveSummary', pageNumber: '06', level: 1},
+        const pages = [
+            {
+                id: 'about-1buy',
+                title: 'About 1BUY.AI',
+                template: 'about1buy',
+                pageNumber: '03',
+                level: 1,
+                pageType: 'full-bleed'  // Full-bleed page with no margins
+            },
+            {
+                id: 'about-ai',
+                title: 'About Our AI Infrastructure',
+                template: 'aboutAI',
+                pageNumber: '05',
+                level: 1,
+                pageType: 'with-margins'  // Page with margins
+            },
+            {
+                id: 'exec-summary',
+                title: 'Executive Summary',
+                template: 'executiveSummary',
+                pageNumber: '06',
+                level: 1,
+                pageType: 'with-margins'  // Page with margins
+            },
             {
                 id: 'cost-breakdown',
                 title: 'Detailed Cost Breakdown and Savings Opportunities',
                 template: 'detailedCostBreakdown',
                 pageNumber: '12',
-                level: 2
+                level: 2,
+                pageType: 'with-margins'  // Page with margins
             },
-            {id: 'mpn-savings', title: 'MPN Wise Savings', template: 'mpnWiseSavings', pageNumber: '13', level: 2},
+            {
+                id: 'mpn-savings',
+                title: 'MPN Wise Savings',
+                template: 'mpnWiseSavings',
+                pageNumber: '13',
+                level: 2,
+                pageType: 'with-margins'  // Page with margins
+            },
             {
                 id: 'risk-analysis',
                 title: 'Component Risk and Lifecycle Analysis',
                 template: 'componentRiskAnalysis',
                 pageNumber: '14',
-                level: 2
-            }, ...reportData.mpnAnalysisPages.map((mpnPage, index) => ({
+                level: 2,
+                pageType: 'with-margins'  // Page with margins
+            },
+            ...reportData.mpnAnalysisPages.map((mpnPage, index) => ({
                 id: mpnPage.id,
                 title: mpnPage.title,
                 template: 'mpnAnalysisPage',
-                pageNumber: String(11 + index).padStart(2, '0'),
-                level:1,
-                pageData: mpnPage
-            }))];
+                level: 1,
+                pageData: mpnPage,
+                pageType: 'with-margins'  // Page with margins
+            }))
+        ];
 
 
         // Read compiled CSS

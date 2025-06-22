@@ -6,14 +6,29 @@
     <title><%= data.reportTitle %></title>
     <style>
         <%= locals.css %>
-        @page :first {
+        @page {
             margin: 0;
         }
+
+        /* Class for pages that should have margins */
+        .with-margins {
+            padding: 0.5in;
+            box-sizing: border-box;
+        }
+
+        .full-bleed {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         .page-break {
             position: relative;
-            min-height: 91vh;
+            min-height: 97vh;
             page-break-after: always;
         }
+
         .toc-list {
             display: flex;
             flex-direction: column;
@@ -61,14 +76,14 @@
 <body class="bg-white">
 <main>
     <% /* Cover Page */ %>
-    <div id="cover-page" class="page-break">
+    <div id="cover-page" class="page-break full-bleed">
         <%- include('coverPage.ejs', { data: data, orbImage: orbImage }); %>
     </div>
 
     <% /* Table of Contents */ %>
-    <div id="table-of-contents" class="page-break p-12">
+    <div id="table-of-contents" class="page-break with-margins">
         <h1 class="text-4xl font-bold mb-8 uppercase">Table of Contents</h1>
-        <ul class="toc-list ">
+        <ul class="toc-list">
             <% pages.forEach(page => { %>
                 <li class="toc-item <%= page.level === 2 ? 'toc-subitem' : '' %>">
                     <a href="#<%= page.id %>" class="toc-title"><%= page.title %></a>
@@ -85,9 +100,9 @@
 
     <% /* Report Pages */ %>
     <% pages.forEach(page => { %>
-        <div id="<%= page.id %>" class="page-break p-12">
+        <div id="<%= page.id %>" class="page-break <%= page.pageType || 'with-margins' %>">
             <%- include(page.template + '.ejs', { data: data, pageData: page.pageData || {} }); %>
-<!--            footer section for dynamic pages-->
+            <!--            footer section for dynamic pages-->
             <div style=" font-size: 10px; display: flex;  justify-content: space-between; position: absolute; bottom: 0; left: 0; right: 0; padding: 0 40px;">
                 <div>Page <%= parseInt(page.pageNumber) %></div>
                 <div><%= page.title %></div>
