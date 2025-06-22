@@ -14,6 +14,48 @@
             min-height: 91vh;
             page-break-after: always;
         }
+        .toc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            font-size: 16px;
+            line-height: 2.25;
+        }
+
+        .toc-subitem {
+            margin-left: 20px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .toc-title {
+            flex-grow: 0.05;
+            white-space: nowrap;
+            color: #000000;
+            font-size: 16px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .toc-dots {
+            flex-grow: 1;
+            border-bottom: 1px dotted #D9D9D9;
+            margin: 0 8px;
+        }
+
+        .toc-page {
+            min-width: 30px;
+            text-align: right;
+            color: #000000;
+            font-size: 16px;
+        }
+
     </style>
 </head>
 <body class="bg-white">
@@ -26,11 +68,12 @@
     <% /* Table of Contents */ %>
     <div id="table-of-contents" class="page-break p-12">
         <h1 class="text-4xl font-bold mb-8 uppercase">Table of Contents</h1>
-        <ul class="space-y-4 text-lg">
+        <ul class="toc-list ">
             <% pages.forEach(page => { %>
-                <li class="border-b pb-2 pt-4 flex justify-between items-baseline">
-                    <a href="#<%= page.id %>" class="text-text-color hover:text-primary"><%= page.title %></a>
-                    <span class="text-gray-500"><%= page.pageNumber %></span>
+                <li class="toc-item <%= page.level === 2 ? 'toc-subitem' : '' %>">
+                    <a href="#<%= page.id %>" class="toc-title"><%= page.title %></a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page"><%= page.pageNumber %></span>
                 </li>
             <% }); %>
         </ul>

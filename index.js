@@ -140,27 +140,32 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
         const reportData = fetchDataForReport(reportId);
 
         // Define page structure for TOC and rendering
-        const pages = [{
-            id: 'about-1buy', title: 'About 1BUY.AI', template: 'about1buy', pageNumber: '03'
-        }, {
-            id: 'about-ai', title: 'About Our AI Infrastructure', template: 'aboutAI', pageNumber: '04'
-        }, {id: 'exec-summary', title: 'Executive Summary', template: 'executiveSummary', pageNumber: '05'}, {
-            id: 'cost-breakdown',
-            title: '1. Detailed Cost Breakdown',
-            template: 'detailedCostBreakdown',
-            pageNumber: '06'
-        }, {id: 'mpn-savings', title: '2. MPN Wise Savings', template: 'mpnWiseSavings', pageNumber: '07'}, {
-            id: 'risk-analysis',
-            title: '3. Component Risk Analysis',
-            template: 'componentRiskAnalysis',
-            pageNumber: '08'
-        }, ...reportData.mpnAnalysisPages.map((mpnPage, index) => ({
-            id: mpnPage.id,
-            title: mpnPage.title,
-            template: 'mpnAnalysisPage',
-            pageNumber: String(11 + index).padStart(2, '0'),
-            pageData: mpnPage
-        }))];
+        const pages = [{id: 'about-1buy', title: 'About 1BUY.AI', template: 'about1buy', pageNumber: '04', level: 1},
+            {id: 'about-ai', title: 'About Our AI Infrastructure', template: 'aboutAI', pageNumber: '05', level: 1},
+            {id: 'exec-summary', title: 'Executive Summary', template: 'executiveSummary', pageNumber: '06', level: 1},
+            {
+                id: 'cost-breakdown',
+                title: 'Detailed Cost Breakdown and Savings Opportunities',
+                template: 'detailedCostBreakdown',
+                pageNumber: '12',
+                level: 2
+            },
+            {id: 'mpn-savings', title: 'MPN Wise Savings', template: 'mpnWiseSavings', pageNumber: '13', level: 2},
+            {
+                id: 'risk-analysis',
+                title: 'Component Risk and Lifecycle Analysis',
+                template: 'componentRiskAnalysis',
+                pageNumber: '14',
+                level: 2
+            }, ...reportData.mpnAnalysisPages.map((mpnPage, index) => ({
+                id: mpnPage.id,
+                title: mpnPage.title,
+                template: 'mpnAnalysisPage',
+                pageNumber: String(11 + index).padStart(2, '0'),
+                level:1,
+                pageData: mpnPage
+            }))];
+
 
         // Read compiled CSS
         const cssPath = path.join(__dirname, 'public', 'output.css');
