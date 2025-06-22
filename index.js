@@ -154,6 +154,15 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
                 pageType: 'full-bleed'  // Full-bleed page with no margins
             },
             {
+                id: 'about-1buy-page2',
+                title: 'About 1BUY.AI',  // Same title as first page to maintain one TOC entry
+                template: 'about1buy-page2',
+                pageNumber: '04',
+                level: 1,
+                pageType: 'with-margins',
+                hideFromToc: true  // Hide from TOC since it's a continuation of the first page
+            },
+            {
                 id: 'about-ai',
                 title: 'About Our AI Infrastructure',
                 template: 'aboutAI',
@@ -222,7 +231,11 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
         // Generate PDF
         const pdfBuffer = await generatePdf(html);
 
-        // Send PDF as response
+        // Sort pages by page number
+        pages.sort((a, b) => parseInt(a.pageNumber) - parseInt(b.pageNumber));
+        
+        // Filter out hidden pages from TOC
+        const tocPages = pages.filter(page => !page.hideFromToc);
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `attachment; filename=report-${reportId}.pdf`);
         res.send(pdfBuffer);

@@ -84,7 +84,10 @@
     <div id="table-of-contents" class="page-break with-margins">
         <h1 class="text-4xl font-bold mb-8 uppercase">Table of Contents</h1>
         <ul class="toc-list">
-            <% pages.forEach(page => { %>
+            <% pages.forEach(page => { 
+                // Skip pages marked with hideFromToc: true
+                if (page.hideFromToc) return;
+            %>
                 <li class="toc-item <%= page.level === 2 ? 'toc-subitem' : '' %>">
                     <a href="#<%= page.id %>" class="toc-title"><%= page.title %></a>
                     <span class="toc-dots"></span>
