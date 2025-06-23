@@ -642,6 +642,11 @@ body {
   z-index: 10;
 }
 
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .-mb-40{
   margin-bottom: -10rem;
 }
@@ -700,6 +705,18 @@ body {
 
 .mt-28{
   margin-top: 7rem;
+}
+
+.mb-1{
+  margin-bottom: 0.25rem;
+}
+
+.mt-20{
+  margin-top: 5rem;
+}
+
+.mt-16{
+  margin-top: 4rem;
 }
 
 .inline-block{
@@ -766,6 +783,10 @@ body {
   height: 450px;
 }
 
+.h-7{
+  height: 1.75rem;
+}
+
 .min-h-72{
   min-height: 18rem;
 }
@@ -776,6 +797,14 @@ body {
 
 .min-h-screen{
   min-height: 100vh;
+}
+
+.min-h-\[400px\]{
+  min-height: 400px;
+}
+
+.min-h-\[250px\]{
+  min-height: 250px;
 }
 
 .w-3\/4{
@@ -808,6 +837,10 @@ body {
 
 .w-\[600px\]{
   width: 600px;
+}
+
+.w-7{
+  width: 1.75rem;
 }
 
 .min-w-\[30\%\]{
@@ -869,6 +902,10 @@ body {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
 .flex-row{
   flex-direction: row;
 }
@@ -879,6 +916,10 @@ body {
 
 .flex-wrap{
   flex-wrap: wrap;
+}
+
+.items-start{
+  align-items: flex-start;
 }
 
 .items-end{
@@ -917,10 +958,20 @@ body {
   gap: 1px;
 }
 
+.gap-4{
+  gap: 1rem;
+}
+
 .space-y-3 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+
+.space-y-1 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
 
 .divide-x > :not([hidden]) ~ :not([hidden]){
@@ -1141,6 +1192,16 @@ body {
   padding-bottom: 2rem;
 }
 
+.px-6{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-12{
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
 .pb-2{
   padding-bottom: 0.5rem;
 }
@@ -1304,6 +1365,11 @@ body {
   color: rgb(161 98 7 / var(--tw-text-opacity, 1));
 }
 
+.text-indigo-600{
+  --tw-text-opacity: 1;
+  color: rgb(79 70 229 / var(--tw-text-opacity, 1));
+}
+
 .shadow{
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
@@ -1336,5 +1402,11 @@ body {
 
   .page-break-inside-avoid {
     page-break-inside: avoid;
+  }
+}
+
+@media (min-width: 640px){
+  .sm\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

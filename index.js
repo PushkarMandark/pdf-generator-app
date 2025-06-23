@@ -178,12 +178,27 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
                 level: 1,
                 pageType: 'full-bleed',
                 hideFromToc: true
+            },{
+                id: 'ai-muscle-for-bom',
+                title: 'AI Muscle for every BOM: Price Negotiator™',
+                template: 'muscleAI-page',
+                pageNumber: '07',
+                level: 1,
+                pageType: 'with-margins',
+             },{
+                id: 'ai-muscle-for-bom2',
+                title: 'AI Muscle for every BOM: Price Negotiator™',
+                template: 'muscleAI-page2',
+                pageNumber: '08',
+                level: 1,
+                pageType: 'with-margins',
+                hideFromToc: true
             },
             {
                 id: 'exec-summary',
                 title: 'Executive Summary',
                 template: 'executiveSummary',
-                pageNumber: '07',
+                pageNumber: '09',
                 level: 1,
                 pageType: 'with-margins'  // Page with margins
             },
