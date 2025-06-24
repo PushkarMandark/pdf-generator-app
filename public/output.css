@@ -1186,6 +1186,16 @@ body {
   background-color: rgb(240 253 244 / var(--tw-bg-opacity, 1));
 }
 
+.bg-red-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
+}
+
+.bg-yellow-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 252 232 / var(--tw-bg-opacity, 1));
+}
+
 .bg-\[linear-gradient\(104\.92deg\2c _\#2CBF67_4\.24\%\2c _\#155930_60\.52\%\)\]{
   background-image: linear-gradient(104.92deg, #2CBF67 4.24%, #155930 60.52%);
 }
@@ -1289,6 +1299,10 @@ body {
 
 .ps-8{
   padding-inline-start: 2rem;
+}
+
+.pl-5{
+  padding-left: 1.25rem;
 }
 
 .text-left{
