@@ -131,13 +131,11 @@ const fetchDataForReport = (reportId) => {
 // PDF Generation Logic
 const generatePdf = async (htmlContent, baseUrl = `http://localhost:${PORT}`) => {
     const browser = await puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     const page = await browser.newPage();
     await page.setContent(htmlContent, {
-        waitUntil: 'networkidle0',
-        baseURL: baseUrl
+        waitUntil: 'networkidle0', baseURL: baseUrl
     });
     const pdfBuffer = await page.pdf({
         format: 'A4', printBackground: true, margin: '0',  // No margins by default
@@ -208,26 +206,54 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
             template: 'executiveSummary',
             pageNumber: '10',
             level: 1,
+            pageType: 'full-bleed'
+        }, {
+            id: 'exec-summary2',
+            title: 'Executive Summary',
+            template: 'executiveSummary-page2',
+            pageNumber: '11',
+            level: 1,
+            pageType: 'full-bleed'
+        }, {
+            id: 'exec-summary3',
+            title: 'Executive Summary',
+            template: 'executiveSummary-page3',
+            pageNumber: '12',
+            level: 1,
+            pageType: 'full-bleed'
+        }, {
+            id: 'exec-summary4',
+            title: 'Executive Summary',
+            template: 'executiveSummary-page4',
+            pageNumber: '12',
+            level: 1,
             pageType: 'with-margins'
+        },{
+            id: 'exec-summary5',
+            title: 'Executive Summary',
+            template: 'executiveSummary-page5',
+            pageNumber: '12',
+            level: 1,
+            pageType: 'full-bleed'
         }, {
             id: 'cost-breakdown',
             title: 'Detailed Cost Breakdown and Savings Opportunities',
             template: 'detailedCostBreakdown',
-            pageNumber: '11',
+            pageNumber: '13',
             level: 2,
             pageType: 'with-margins'
         }, {
             id: 'mpn-savings',
             title: 'MPN Wise Savings',
             template: 'mpnWiseSavings',
-            pageNumber: '13',
+            pageNumber: '14',
             level: 2,
             pageType: 'with-margins'  // Page with margins
         }, {
             id: 'risk-analysis',
             title: 'Component Risk and Lifecycle Analysis',
             template: 'componentRiskAnalysis',
-            pageNumber: '14',
+            pageNumber: '15',
             level: 2,
             pageType: 'with-margins'  // Page with margins
         }, ...reportData.mpnAnalysisPages.map((mpnPage, index) => ({
@@ -251,10 +277,7 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
 
         const templatePath = path.join(__dirname, 'views', 'reportTemplate.ejs');
         const html = await ejs.renderFile(templatePath, {
-            data: reportData,
-            pages: pages,
-            css: css,
-            ...images  // Spread all images into the template context
+            data: reportData, pages: pages, css: css, ...images  // Spread all images into the template context
         });
 
         const baseUrl = `${req.protocol}://${req.get('host')}`;

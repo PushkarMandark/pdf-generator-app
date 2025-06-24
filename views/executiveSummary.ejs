@@ -1,30 +1,60 @@
-<h1 class="text-3xl font-bold text-primary mb-6 border-b-2 pb-2 border-primary">Executive Summary</h1>
-<div class="grid grid-cols-2 gap-6 mb-8">
-    <div class="bg-primary-variant-light p-4 rounded-lg text-center shadow">
-        <p class="text-sm text-gray-600">MPNs Analysed</p>
-        <p class="text-2xl font-bold text-primary"><%= data.executiveSummary.mpnsAnalysed %></p>
+<div class="mx-auto min-h-screen bg-[#E1F0E7] px-12 py-12  text-gray-800">
+    <div class="flex min-h-[90vh] flex-col justify-between">
+        <div>
+            <h2 class="mb-8 text-4xl font-bold">EXECUTIVE SUMMARY</h2>
+        </div>
+
+        <div>
+            <div class="grid grid-cols-2 gap-4 overflow-hidden rounded-lg border bg-[#FFFFFF66] text-center text-sm sm:grid-cols-4">
+                <div class="min-h-[150px] border-r px-2 py-4">
+                    <p class="text-start ml-2 text-3xl font-semibold">5</p>
+                    <p class="mt-16 ml-2 text-gray-600 text text-start font-semibold ">MPNs Analysed</p>
+                </div>
+                <div class="min-h-[150px] border-r px-1 py-4">
+                    <p class="text-start text-3xl font-semibold">$867,982</p>
+                    <p class="mt-16 text-gray-600 text text-start font-semibold ">Value Analysed</p>
+                </div>
+                <div class="min-h-[150px] border-r px-1 py-4">
+                    <p class="text-start text-3xl font-semibold">$111,485</p>
+                    <p class="mt-16 text-gray-600 text text-start font-semibold ">Savings Unlocked</p>
+                </div>
+                <div class="min-h-[150px] px-1 py-4">
+                    <p class="text-start text-3xl font-semibold">12.84%</p>
+                    <p class="mt-16 text-gray-600 text text-start font-semibold ">BOM Savings</p>
+                </div>
+            </div>
+
+            <p class="mt-6 text-sm leading-relaxed text-gray-700">This report summarizes a focused sourcing diagnostic
+                performed on 5 high-impact electronic components (MPNs) procured by the client. The analysis was
+                conducted using Sharpe, our proprietary AI-powered sourcing intelligence platform, and Price
+                Negotiator™, our in-house pricing optimization engine. These tools enabled granular benchmarking,
+                distributor evaluation, and pricing deviation modeling to surface actionable savings opportunities.</p>
+
+            <div class="mt-8">
+                <h3 class="mb-4 text-base font-semibold">Summary of Key Metrics</h3>
+                <div class="divide-y divide-gray-200 text-sm">
+                    <div class="flex justify-between py-3 border-b border-gray-300 ">
+                        <span class="text-gray-600">Total sourcing value analyzed</span>
+                        <span class="font-semibold">$867,982</span>
+                    </div>
+                    <div class="flex justify-between py-3  border-b border-gray-300">
+                        <span class="text-gray-600">Annual volume requirement</span>
+                        <span class="font-semibold">8,031,860 Parts</span>
+                    </div>
+                    <div class="flex justify-between py-3  border-b border-gray-300">
+                        <span class="text-gray-600">Maximum Identified Savings Potential</span>
+                        <span class="font-semibold">$111,485</span>
+                    </div>
+                    <div class="flex justify-between py-3  border-b border-gray-300">
+                        <span class="text-gray-600">Annual Savings Opportunity in %</span>
+                        <span class="font-semibold">12.84%</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="mt-6 text-sm leading-relaxed text-gray-700">Our findings indicate significant optimization
+                potential in the client’s sourcing approach, with opportunities emerging from regional price variance,
+                underutilized distributors, and missed component-level substitution strategies.</p>
+        </div>
     </div>
-    <div class="bg-primary-variant-light p-4 rounded-lg text-center shadow">
-        <p class="text-sm text-gray-600">Total Value Analysed</p>
-        <p class="text-2xl font-bold text-primary"><%= data.executiveSummary.valueAnalysed %></p>
-    </div>
-    <div class="bg-green-100 p-4 rounded-lg text-center shadow">
-        <p class="text-sm text-gray-600">Max Savings Unlocked</p>
-        <p class="text-2xl font-bold text-green-700"><%= data.executiveSummary.savingsUnlocked %></p>
-    </div>
-    <div class="bg-green-100 p-4 rounded-lg text-center shadow">
-        <p class="text-sm text-gray-600">BOM Savings Percentage</p>
-        <p class="text-2xl font-bold text-green-700"><%= data.executiveSummary.bomSavingsPercentage %></p>
-    </div>
-</div>
-<div class="bg-gray-50 p-6 rounded-lg page-break-inside-avoid">
-    <h2 class="text-xl font-bold text-text-color mb-4">Summary Metrics</h2>
-    <ul class="space-y-3">
-        <% data.executiveSummary.summaryMetrics.forEach(metric => { %>
-            <li class="flex justify-between border-b pb-2">
-                <span class="text-gray-600"><%= metric.label %></span>
-                <span class="font-bold text-text-color"><%= metric.value %></span>
-            </li>
-        <% }); %>
-    </ul>
 </div>
