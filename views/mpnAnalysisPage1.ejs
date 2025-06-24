@@ -25,16 +25,78 @@
         </div>
     </div>
 
-    <div class="mb-6">
-        <h3 class="mb-4 text-lg font-semibold">Peer vs domestic vs global pricing chart:</h3>
-        <div class="flex items-end h-[300px]">
-            <div class="flex h-[100%] w-[25%] flex-col items-center ml-3 justify-between rounded bg-[#ABE6C2] p-4 text-center font-bold">$0.01106<br /><span class="">Napino</span></div>
-            <div class="flex h-[50%] w-[25%] flex-col items-center -ml-3 justify-between rounded bg-[#C0ECD1] p-4 text-center font-bold">$0.00635<br /><span class="">Peer</span></div>
-            <div class="flex h-[60%] w-[25%] flex-col items-center -ml-3 justify-between rounded bg-[#D5F2E1] p-4 text-center font-bold">$0.00668<br /><span class="">Domestic</span></div>
-            <div class="flex h-[40%] w-[25%] flex-col items-center -ml-3 justify-between rounded bg-[#EAF9F0] p-4 text-center font-bold">$0.00605<br /><span class="">Global</span></div>
-        </div>
-    </div>
+    <% if (pageData.shouldRenderChart) { %>
+        <div id="bar-chart-<%= pageData.mpn.replace(/[^a-zA-Z0-9]/g, '') %>" class=""></div>
 
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var chartId = "bar-chart-<%= pageData.mpn.replace(/[^a-zA-Z0-9]/g, '') %>";
+                var barOptions = {
+                    series: [{
+                        name: 'Price',
+                        data: [0.01106, 0.00635, 0.00668, 0.00605]
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        toolbar: {show: false},
+                    },
+                    plotOptions: {
+                        bar: {
+                            borderRadius: 6,
+                            horizontal: false,
+                            columnWidth: '45%',
+                            dataLabels: {position: 'top'}
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function (val) {
+                            return `$${val.toFixed(5)}`;
+                        },
+                        offsetY: -10,
+                        style: {
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            colors: ['#1e1e1e']
+                        }
+                    },
+                    xaxis: {
+                        categories: ['Napino', 'Peer', 'Domestic', 'Global'],
+                        labels: {
+                            style: {fontWeight: 600, fontSize: '14px'}
+                        }
+                    },
+                    yaxis: {labels: {show: false}},
+                    grid: {show: false},
+                    colors: ['#a0e8c5', '#b3edd1', '#cef3df', '#e3f9ef'],
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return `$${val.toFixed(5)}`;
+                            }
+                        }
+                    }
+                };
+
+                var chartElement = document.querySelector("#" + chartId);
+                if (chartElement) {
+                    var barChart = new ApexCharts(chartElement, barOptions);
+                    barChart.render();
+                }
+            });
+        </script>
+    <% } %>
+
+    <!--    <div class="mb-6">-->
+    <!--        <h3 class="mb-4 text-lg font-semibold">Peer vs domestic vs global pricing chart:</h3>-->
+    <!--        <div class="flex items-end h-[300px]">-->
+    <!--            <div class="flex h-[100%] w-[25%] flex-col items-center ml-3 justify-between rounded bg-[#ABE6C2] p-4 text-center font-bold">$0.01106<br /><span class="">Napino</span></div>-->
+    <!--            <div class="flex h-[50%] w-[25%] flex-col items-center -ml-3 justify-between rounded bg-[#C0ECD1] p-4 text-center font-bold">$0.00635<br /><span class="">Peer</span></div>-->
+    <!--            <div class="flex h-[60%] w-[25%] flex-col items-center -ml-3 justify-between rounded bg-[#D5F2E1] p-4 text-center font-bold">$0.00668<br /><span class="">Domestic</span></div>-->
+    <!--            <div class="flex h-[40%] w-[25%] flex-col items-center -ml-3 justify-between rounded bg-[#EAF9F0] p-4 text-center font-bold">$0.00605<br /><span class="">Global</span></div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
 
     <!-- Observations -->

@@ -137,6 +137,13 @@ const generatePdf = async (htmlContent, baseUrl = `http://localhost:${PORT}`) =>
     await page.setContent(htmlContent, {
         waitUntil: 'networkidle0', baseURL: baseUrl
     });
+    //to render all apexcharts page
+    await page.waitForFunction(() => {
+        return Array.from(document.querySelectorAll('.apexcharts-canvas'))
+            .every(chart => chart.offsetHeight > 0);
+    }, {timeout: 5000}).catch(() => console.warn("Chart render timeout"));
+    new Promise(r => setTimeout(r, 1000))
+
     const pdfBuffer = await page.pdf({
         format: 'A4', printBackground: true, margin: '0',  // No margins by default
         displayHeaderFooter: false, preferCSSPageSize: true
@@ -235,8 +242,7 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
             pageNumber: '14',
             level: 2,
             pageType: 'with-margins'
-        },
-            //     {
+        }, //     {
             //     id: 'cost-breakdown',
             //     title: 'Detailed Cost Breakdown and Savings Opportunities',
             //     template: 'detailedCostBreakdown',
@@ -258,63 +264,60 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
             //     level: 2,
             //     pageType: 'with-margins'
             // },
-            ...reportData.mpnAnalysisPages.flatMap((mpnPage, index) => {
-                return [
-                    {
-                        id: `${mpnPage.id}-1`,
-                        title: `MPN Analysis | ${mpnPage.mpn}`,
-                        template: 'mpnAnalysisPage1',
-                        level: 1,
-                        pageType: 'with-margins',
-                        pageData: mpnPage,
-                        hideFromToc: false
-                    },
-                    {
-                        id: `${mpnPage.id}-2`,
-                        title: `MPN Analysis | ${mpnPage.mpn}`,
-                        template: 'mpnAnalysisPage2',
-                        level: 1,
-                        pageType: 'with-margins',
-                        pageData: mpnPage,
-                        hideFromToc: true
-                    },
-                    {
-                        id: `${mpnPage.id}-3`,
-                        title: `MPN Analysis | ${mpnPage.mpn}`,
-                        template: 'mpnAnalysisPage3',
-                        level: 1,
-                        pageType: 'with-margins',
-                        pageData: mpnPage,
-                        hideFromToc: true
-                    },
-                    {
-                        id: `${mpnPage.id}-4`,
-                        title: `MPN Analysis | ${mpnPage.mpn}`,
-                        template: 'mpnAnalysisPage4',
-                        level: 1,
-                        pageType: 'with-margins',
-                        pageData: mpnPage,
-                        hideFromToc: true
-                    },
-                    {
-                        id: `${mpnPage.id}-5`,
-                        title: `MPN Analysis | ${mpnPage.mpn}`,
-                        template: 'mpnAnalysisPage5',
-                        level: 1,
-                        pageType: 'with-margins',
-                        pageData: mpnPage,
-                        hideFromToc: true
-                    },
-                    {
-                        id: `${mpnPage.id}-6`,
-                        title: `MPN Analysis | ${mpnPage.mpn}`,
-                        template: 'mpnAnalysisPage6',
-                        level: 1,
-                        pageType: 'full-bleed',
-                        pageData: mpnPage,
-                        hideFromToc: true
-                    },
-                    // {
+            ...Array.from(
+                new Map(
+                    reportData.mpnAnalysisPages.map(p => [p.mpn, p])
+                ).values()
+            ).flatMap((mpnPage, index) => {
+                return [{
+                    id: `${mpnPage.id}-1`,
+                    title: `MPN Analysis | ${mpnPage.mpn}`,
+                    template: 'mpnAnalysisPage1',
+                    level: 1,
+                    pageType: 'with-margins',
+                    pageData: {...mpnPage, shouldRenderChart: true},
+                    hideFromToc: false
+                }, {
+                    id: `${mpnPage.id}-2`,
+                    title: `MPN Analysis | ${mpnPage.mpn}`,
+                    template: 'mpnAnalysisPage2',
+                    level: 1,
+                    pageType: 'with-margins',
+                    pageData: {...mpnPage, shouldRenderChart: false},
+                    hideFromToc: true
+                }, {
+                    id: `${mpnPage.id}-3`,
+                    title: `MPN Analysis | ${mpnPage.mpn}`,
+                    template: 'mpnAnalysisPage3',
+                    level: 1,
+                    pageType: 'with-margins',
+                    pageData: {...mpnPage, shouldRenderChart: false},
+                    hideFromToc: true
+                }, {
+                    id: `${mpnPage.id}-4`,
+                    title: `MPN Analysis | ${mpnPage.mpn}`,
+                    template: 'mpnAnalysisPage4',
+                    level: 1,
+                    pageType: 'with-margins',
+                    pageData: {...mpnPage, shouldRenderChart: false},
+                    hideFromToc: true
+                }, {
+                    id: `${mpnPage.id}-5`,
+                    title: `MPN Analysis | ${mpnPage.mpn}`,
+                    template: 'mpnAnalysisPage5',
+                    level: 1,
+                    pageType: 'with-margins',
+                    pageData: {...mpnPage, shouldRenderChart: false},
+                    hideFromToc: true
+                }, {
+                    id: `${mpnPage.id}-6`,
+                    title: `MPN Analysis | ${mpnPage.mpn}`,
+                    template: 'mpnAnalysisPage6',
+                    level: 1,
+                    pageType: 'full-bleed',
+                    pageData: {...mpnPage, shouldRenderChart: false},
+                    hideFromToc: true
+                }, // {
                     //     id: `${mpnPage.id}-7`,
                     //     title: `MPN Analysis | ${mpnPage.mpn}`,
                     //     template: 'mpnAnalysisPage7',
@@ -328,11 +331,10 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
                 id: 'annexure',
                 title: 'Annexure',
                 template: 'annexure',
-                pageNumber: (14+ reportData.mpnAnalysisPages.length * 6).toString(), // Adjust page number based on MPN pages
+                pageNumber: (14 + reportData.mpnAnalysisPages.length * 6).toString(), // Adjust page number based on MPN pages
                 level: 1,
                 pageType: 'with-margins'
-            },
-        ];
+            },];
 
 
         const cssPath = path.join(__dirname, 'public', 'output.css');
@@ -351,6 +353,7 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
         });
 
         const baseUrl = `${req.protocol}://${req.get('host')}`;
+
         const pdfBuffer = await generatePdf(html, baseUrl);
 
         pages.sort((a, b) => parseInt(a.pageNumber) - parseInt(b.pageNumber));
