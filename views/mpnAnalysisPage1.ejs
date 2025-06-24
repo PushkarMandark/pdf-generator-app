@@ -1,0 +1,50 @@
+<div class="font-sans bg-white text-gray-800">
+    <h2 class=" font-semibold uppercase mb-1">MPN Analysis</h2>
+    <h1 class="text-3xl font-bold mb-8"><%= pageData.mpn %></h1>
+
+    <div class=" overflow-hidden mb-8">
+        <div class="grid grid-cols-2 border-b">
+            <div class="p-4 font-medium">Annual Volume</div>
+            <div class="p-4 text-right font-semibold">1,248,000</div>
+        </div>
+        <div class="grid grid-cols-2 border-b">
+            <div class="p-4 font-medium">Unit price</div>
+            <div class="p-4 text-right font-semibold">$0.01106</div>
+        </div>
+        <div class="grid grid-cols-2 border-b">
+            <div class="p-4 font-medium">Annual Sourcing Value</div>
+            <div class="p-4 text-right font-semibold">$13,802.88</div>
+        </div>
+        <div class="grid grid-cols-2 border-b">
+            <div class="p-4 font-medium">Potential Savings % range</div>
+            <div class="p-4 text-right font-semibold">39.60 - 45.29%</div>
+        </div>
+        <div class="grid grid-cols-2 border-b ">
+            <div class="p-4 font-medium">Potential Savings $ Range</div>
+            <div class="p-4 text-right font-semibold ">$5,466 - $6,252</div>
+        </div>
+    </div>
+
+    <div class="mb-6">
+        <h3 class="mb-4 text-lg font-semibold">Peer vs domestic vs global pricing chart:</h3>
+        <div class="flex items-end h-[300px]">
+            <div class="flex h-[100%] w-[25%] flex-col items-center ml-3 justify-between rounded bg-[#ABE6C2] p-4 text-center font-bold">$0.01106<br /><span class="">Napino</span></div>
+            <div class="flex h-[50%] w-[25%] flex-col items-center -ml-3 justify-between rounded bg-[#C0ECD1] p-4 text-center font-bold">$0.00635<br /><span class="">Peer</span></div>
+            <div class="flex h-[60%] w-[25%] flex-col items-center -ml-3 justify-between rounded bg-[#D5F2E1] p-4 text-center font-bold">$0.00668<br /><span class="">Domestic</span></div>
+            <div class="flex h-[40%] w-[25%] flex-col items-center -ml-3 justify-between rounded bg-[#EAF9F0] p-4 text-center font-bold">$0.00605<br /><span class="">Global</span></div>
+        </div>
+    </div>
+
+
+
+    <!-- Observations -->
+    <div class="mt-8">
+        <h3 class="text-lg font-bold text-green-800 mb-2">Observations</h3>
+        <p class="text-gray-700  leading-relaxed">
+            The MPN <strong>DTC114EU3HZGT106</strong> shows a significant pricing delta, with the global lowest rate
+            (<strong>$0.00605</strong>) offering a potential 45.29% savings compared to the current minimum unit price
+            (<strong>$0.01106</strong>). Both peer and domestic benchmarks also reveal a margin for optimization,
+            indicating room for renegotiation or alternate sourcing.
+        </p>
+    </div>
+</div>

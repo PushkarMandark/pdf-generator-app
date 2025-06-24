@@ -209,61 +209,130 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
             pageType: 'full-bleed'
         }, {
             id: 'exec-summary2',
-            title: 'Executive Summary',
+            title: 'Detailed Cost Breakdown and Savings Opportunities',
             template: 'executiveSummary-page2',
             pageNumber: '11',
-            level: 1,
+            level: 2,
             pageType: 'full-bleed'
         }, {
             id: 'exec-summary3',
-            title: 'Executive Summary',
+            title: 'MPN Wise Savings',
             template: 'executiveSummary-page3',
             pageNumber: '12',
-            level: 1,
+            level: 2,
             pageType: 'full-bleed'
         }, {
             id: 'exec-summary4',
-            title: 'Executive Summary',
+            title: 'Component Risk and Lifecycle Analysis',
             template: 'executiveSummary-page4',
-            pageNumber: '12',
-            level: 1,
-            pageType: 'with-margins'
-        },{
-            id: 'exec-summary5',
-            title: 'Executive Summary',
-            template: 'executiveSummary-page5',
-            pageNumber: '12',
-            level: 1,
-            pageType: 'with-margins'
-        }, {
-            id: 'cost-breakdown',
-            title: 'Detailed Cost Breakdown and Savings Opportunities',
-            template: 'detailedCostBreakdown',
             pageNumber: '13',
             level: 2,
             pageType: 'with-margins'
         }, {
-            id: 'mpn-savings',
-            title: 'MPN Wise Savings',
-            template: 'mpnWiseSavings',
+            id: 'exec-summary5',
+            title: 'Key Insights',
+            template: 'executiveSummary-page5',
             pageNumber: '14',
             level: 2,
-            pageType: 'with-margins'  // Page with margins
-        }, {
-            id: 'risk-analysis',
-            title: 'Component Risk and Lifecycle Analysis',
-            template: 'componentRiskAnalysis',
-            pageNumber: '15',
-            level: 2,
-            pageType: 'with-margins'  // Page with margins
-        }, ...reportData.mpnAnalysisPages.map((mpnPage, index) => ({
-            id: mpnPage.id,
-            title: mpnPage.title,
-            template: 'mpnAnalysisPage',
-            level: 1,
-            pageData: mpnPage,
             pageType: 'with-margins'
-        }))];
+        },
+            //     {
+            //     id: 'cost-breakdown',
+            //     title: 'Detailed Cost Breakdown and Savings Opportunities',
+            //     template: 'detailedCostBreakdown',
+            //     pageNumber: '13',
+            //     level: 2,
+            //     pageType: 'with-margins'
+            // }, {
+            //     id: 'mpn-savings',
+            //     title: 'MPN Wise Savings',
+            //     template: 'mpnWiseSavings',
+            //     pageNumber: '14',
+            //     level: 2,
+            //     pageType: 'with-margins'
+            // }, {
+            //     id: 'risk-analysis',
+            //     title: 'Component Risk and Lifecycle Analysis',
+            //     template: 'componentRiskAnalysis',
+            //     pageNumber: '15',
+            //     level: 2,
+            //     pageType: 'with-margins'
+            // },
+            ...reportData.mpnAnalysisPages.flatMap((mpnPage, index) => {
+                return [
+                    {
+                        id: `${mpnPage.id}-1`,
+                        title: `MPN Analysis | ${mpnPage.mpn}`,
+                        template: 'mpnAnalysisPage1',
+                        level: 1,
+                        pageType: 'with-margins',
+                        pageData: mpnPage,
+                        hideFromToc: false
+                    },
+                    {
+                        id: `${mpnPage.id}-2`,
+                        title: `MPN Analysis | ${mpnPage.mpn}`,
+                        template: 'mpnAnalysisPage2',
+                        level: 1,
+                        pageType: 'with-margins',
+                        pageData: mpnPage,
+                        hideFromToc: true
+                    },
+                    {
+                        id: `${mpnPage.id}-3`,
+                        title: `MPN Analysis | ${mpnPage.mpn}`,
+                        template: 'mpnAnalysisPage3',
+                        level: 1,
+                        pageType: 'with-margins',
+                        pageData: mpnPage,
+                        hideFromToc: true
+                    },
+                    {
+                        id: `${mpnPage.id}-4`,
+                        title: `MPN Analysis | ${mpnPage.mpn}`,
+                        template: 'mpnAnalysisPage4',
+                        level: 1,
+                        pageType: 'with-margins',
+                        pageData: mpnPage,
+                        hideFromToc: true
+                    },
+                    {
+                        id: `${mpnPage.id}-5`,
+                        title: `MPN Analysis | ${mpnPage.mpn}`,
+                        template: 'mpnAnalysisPage5',
+                        level: 1,
+                        pageType: 'with-margins',
+                        pageData: mpnPage,
+                        hideFromToc: true
+                    },
+                    {
+                        id: `${mpnPage.id}-6`,
+                        title: `MPN Analysis | ${mpnPage.mpn}`,
+                        template: 'mpnAnalysisPage6',
+                        level: 1,
+                        pageType: 'full-bleed',
+                        pageData: mpnPage,
+                        hideFromToc: true
+                    },
+                    // {
+                    //     id: `${mpnPage.id}-7`,
+                    //     title: `MPN Analysis | ${mpnPage.mpn}`,
+                    //     template: 'mpnAnalysisPage7',
+                    //     level: 1,
+                    //     pageType: 'with-margins',
+                    //     pageData: mpnPage,
+                    //     hideFromToc: true
+                    // }
+                ];
+            }), {
+                id: 'annexure',
+                title: 'Annexure',
+                template: 'annexure',
+                pageNumber: (14+ reportData.mpnAnalysisPages.length * 6).toString(), // Adjust page number based on MPN pages
+                level: 1,
+                pageType: 'with-margins'
+            },
+        ];
 
 
         const cssPath = path.join(__dirname, 'public', 'output.css');
@@ -272,7 +341,8 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
         const images = {
             orbImage: loadImageBase64('onebuySphare.png'),
             howItWorks: loadImageBase64('howITWork.png'),
-            orbMini: loadImageBase64('orb-mini.png')
+            orbMini: loadImageBase64('orb-mini.png'),
+            mapImage: loadImageBase64('map.png'),
         };
 
         const templatePath = path.join(__dirname, 'views', 'reportTemplate.ejs');
