@@ -1,13 +1,90 @@
+<style>
+     #gauge-container {
+        position: relative;
+    }
+
+    .needle {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        width: 6px;
+        height: 60px;
+        background-color: black;
+        border-radius: 4px;
+        transform-origin: bottom center;
+        z-index: 10;
+    }
+</style>
 <div class=" text-gray-800 bg-white">
     <!-- Gauge Section -->
     <div class="flex flex-col items-center mb-10 mt-10 ">
         <h2 class="font-bold text-2xl mb-2">Savings Potentiometer</h2>
         <!-- Placeholder for Gauge -->
-        <div class="w-40 h-40 rounded-full bg-gradient-to-tr from-green-100 via-green-300 to-green-600 flex items-center justify-center mb-2">
-            <!-- Needle / Value Overlay Placeholder -->
-         </div>
-        <p class="text-gray-600 font-semibold mt-2">Maximum savings potential</p>
-        <span class="text-3xl font-semibold text-gray-900">45.29%</span>
+
+        <div class="text-center my-8 relative w-[240px] h-[160px] mx-auto" id="gauge-container">
+            <div id="gauge-chart" class="w-full h-full"></div>
+            <div class="absolute bottom-[-15px] left-1/2 transform -translate-x-1/2 text-sm font-medium text-gray-600">
+                Maximum savings potential
+            </div>
+            <div class="absolute bottom-[-45px] left-1/2 transform -translate-x-1/2 text-2xl font-bold text-gray-900">
+                30%
+            </div>
+        </div>
+
+        <script>
+            const savingsValue = 30;
+
+            const angle = -135 + (270 * (savingsValue / 100)); // Convert value (0–100) to angle (-135 to 135)
+
+            const gaugeOptions = {
+                series: [savingsValue],
+                chart: {
+                    height: 160,
+                    type: 'radialBar',
+                    sparkline: {enabled: true},
+                },
+                plotOptions: {
+                    radialBar: {
+                        startAngle: -135,
+                        endAngle: 135,
+                        hollow: {
+                            margin: 0,
+                            size: '70%',
+                        },
+                        track: {
+                            background: '#e6f4ec',
+                            strokeWidth: '100%',
+                            margin: 0,
+                        },
+                        dataLabels: {
+                            show: false
+                        }
+                    }
+                },
+                fill: {
+                    type: 'solid',
+                    colors: ['#34c98e']
+                },
+                stroke: {
+                    lineCap: 'round'
+                }
+            };
+
+            const chart = new ApexCharts(document.querySelector("#gauge-chart"), gaugeOptions);
+            chart.render().then(() => {
+                const needle = document.createElement('div');
+                needle.className = 'needle';
+                needle.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+                document.getElementById('gauge-container').appendChild(needle);
+            });
+        </script>
+
+
+        <!--        <div class="w-40 h-40 rounded-full bg-gradient-to-tr from-green-100 via-green-300 to-green-600 flex items-center justify-center mb-2">-->
+        <!--            &lt;!&ndash; Needle / Value Overlay Placeholder &ndash;&gt;-->
+        <!--        </div>-->
+<!--        <p class="text-gray-600 font-semibold mt-2">Maximum savings potential</p>-->
+<!--        <span class="text-3xl font-semibold text-gray-900">45.29%</span>-->
 
     </div>
 
