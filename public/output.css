@@ -807,6 +807,10 @@ body {
   min-height: 250px;
 }
 
+.min-h-\[230px\]{
+  min-height: 230px;
+}
+
 .w-3\/4{
   width: 75%;
 }
@@ -857,6 +861,10 @@ body {
 
 .max-w-5xl{
   max-width: 64rem;
+}
+
+.max-w-6xl{
+  max-width: 72rem;
 }
 
 .flex-1{
@@ -1145,6 +1153,10 @@ body {
 
 .p-6{
   padding: 1.5rem;
+}
+
+.p-2{
+  padding: 0.5rem;
 }
 
 .px-10{
