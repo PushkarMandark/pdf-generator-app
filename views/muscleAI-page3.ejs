@@ -1,0 +1,61 @@
+<div class="mx-auto">
+    <h1 class="text-4xl font-bold mb-2">1BUY’S DATA</h1>
+    <h2 class="text-4xl font-bold  mb-12">METHODOLOGY </h2>
+    <p class="text-lx mb-4">The intelligence pipeline behind 1BUY is designed for accuracy, scale, and actionability.
+        Here's how data is
+        transformed into insights:</p>
+    <div class="my-2">
+        <div>
+            <h3 class="font-bold">1. Ingestion & Unification</h3>
+            <p class="text-sm text-gray-700 mt-1 mx-4 mb-4">
+                Bill of Materials (BOMs), ERP exports, distributor APIs, and tariff feeds are streamed into the
+                centralized lake. LLM-powered entity extraction and fuzzy MPN resolution bring structure to messy,
+                unstandardized inputs.
+            </p>
+        </div>
+
+        <div>
+            <h3 class="font-bold">2. Cleaning & Enrichment</h3>
+            <p class="text-sm text-gray-700 mt-1 mx-4 mb-4">
+                Data is deduplicated and enriched with lifecycle status (e.g., EOL, NRND), compliance attributes, and
+                standardized currencies. This step ensures every record is analysis-ready.
+            </p>
+        </div>
+
+        <div>
+            <h3 class="font-bold">3. Model Training & Forecasting</h3>
+            <p class="text-sm text-gray-700 mt-1 mx-4 mb-4">
+                Temporal models (XGBoost, Prophet) are retrained nightly to refresh price predictions and flag emerging
+                risks. These dynamic models respond to shifting market conditions, improving pricing accuracy over time.
+            </p>
+        </div>
+
+        <div>
+            <h3 class="font-bold">4. Anomaly Detection</h3>
+            <p class="text-sm text-gray-700 mt-1 mx-4 mb-4">
+                Z-score algorithms run continuously to catch sudden cost anomalies, unauthorized supplier pricing, and
+                grey-market deviations within minutes of detection.
+            </p>
+        </div>
+
+        <div>
+            <h3 class="font-bold">5. Natural Language Insights</h3>
+            <p class="text-sm text-gray-700 mt-1 mx-4 mb-4">
+                Using retrieval-augmented generation (RAG), alerts and recommendations are automatically translated into
+                actionable plain-English insights and delivered to users through dashboards, APIs, or messaging
+                platforms (e.g., Slack, Teams).
+            </p>
+        </div>
+    </div>
+
+    <p class="italic text-sm text-gray-600 mt-6">
+        This layered approach allows for real-time intelligence that is both reliable and immediately actionable
+        <across></across>
+        sourcing workflows.
+    </p>
+
+    <div class="mt-10">
+        <h3 class="text-lg font-semibold mb-4">How it works</h3>
+        <img src="<%= howItWorks %>" alt="How It Works" class="w-full h-auto"/>
+    </div>
+</div>

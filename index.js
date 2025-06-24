@@ -4,12 +4,21 @@ const ejs = require('ejs');
 const fs = require('fs');
 const path = require('path');
 
+// Helper function to load images as base64
+const loadImageBase64 = (filename) => {
+    const filePath = path.join(__dirname, 'public', 'images', filename);
+    return `data:image/png;base64,${fs.readFileSync(filePath, 'base64')}`;
+};
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Serve static files from public directory
+app.use(express.static('public'));
+
 // Dummy data simulation
 const fetchDataForReport = (reportId) => {
-    // In a real app, you might fetch data from a database based on reportId
+    // In this we will get data from a database or an API.
     return {
         reportTitle: "Sharper Sourcing with AI: BOM Optimisation & Savings",
         companyName: "1BUY.AI",
@@ -120,18 +129,19 @@ const fetchDataForReport = (reportId) => {
 };
 
 // PDF Generation Logic
-const generatePdf = async (htmlContent) => {
+const generatePdf = async (htmlContent, baseUrl = `http://localhost:${PORT}`) => {
     const browser = await puppeteer.launch({
-        headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     const page = await browser.newPage();
-    await page.setContent(htmlContent, {waitUntil: 'networkidle0'});
+    await page.setContent(htmlContent, {
+        waitUntil: 'networkidle0',
+        baseURL: baseUrl
+    });
     const pdfBuffer = await page.pdf({
-        format: 'A4',
-        printBackground: true,
-        margin: '0',  // No margins by default
-        displayHeaderFooter: false,
-        preferCSSPageSize: true
+        format: 'A4', printBackground: true, margin: '0',  // No margins by default
+        displayHeaderFooter: false, preferCSSPageSize: true
     });
     await browser.close();
     return pdfBuffer;
@@ -144,120 +154,114 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
         const reportData = fetchDataForReport(reportId);
 
         // Define page structure for TOC and rendering
-        const pages = [
-            {
-                id: 'about-1buy',
-                title: 'About 1BUY.AI',
-                template: 'about1buy',
-                pageNumber: '03',
-                level: 1,
-                pageType: 'full-bleed'  // Full-bleed page with no margins
-            },
-            {
-                id: 'about-1buy-page2',
-                title: 'About 1BUY.AI',  // Same title as first page to maintain one TOC entry
-                template: 'about1buy-page2',
-                pageNumber: '04',
-                level: 1,
-                pageType: 'with-margins',
-                hideFromToc: true  // Hide from TOC since it's a continuation of the first page
-            },
-            {
-                id: 'about-ai',
-                title: 'About Our AI Infrastructure',
-                template: 'aboutAI',
-                pageNumber: '05',
-                level: 1,
-                pageType: 'with-margins'  // Page with margins
-            },
-            {
-                id: 'about-ai2',
-                title: 'About Our AI Infrastructure',
-                template: 'aboutAI-page2',
-                pageNumber: '06',
-                level: 1,
-                pageType: 'full-bleed',
-                hideFromToc: true
-            },{
-                id: 'ai-muscle-for-bom',
-                title: 'AI Muscle for every BOM: Price Negotiator™',
-                template: 'muscleAI-page',
-                pageNumber: '07',
-                level: 1,
-                pageType: 'with-margins',
-             },{
-                id: 'ai-muscle-for-bom2',
-                title: 'AI Muscle for every BOM: Price Negotiator™',
-                template: 'muscleAI-page2',
-                pageNumber: '08',
-                level: 1,
-                pageType: 'with-margins',
-                hideFromToc: true
-            },
-            {
-                id: 'exec-summary',
-                title: 'Executive Summary',
-                template: 'executiveSummary',
-                pageNumber: '09',
-                level: 1,
-                pageType: 'with-margins'  // Page with margins
-            },
-            {
-                id: 'cost-breakdown',
-                title: 'Detailed Cost Breakdown and Savings Opportunities',
-                template: 'detailedCostBreakdown',
-                pageNumber: '12',
-                level: 2,
-                pageType: 'with-margins'  // Page with margins
-            },
-            {
-                id: 'mpn-savings',
-                title: 'MPN Wise Savings',
-                template: 'mpnWiseSavings',
-                pageNumber: '13',
-                level: 2,
-                pageType: 'with-margins'  // Page with margins
-            },
-            {
-                id: 'risk-analysis',
-                title: 'Component Risk and Lifecycle Analysis',
-                template: 'componentRiskAnalysis',
-                pageNumber: '14',
-                level: 2,
-                pageType: 'with-margins'  // Page with margins
-            },
-            ...reportData.mpnAnalysisPages.map((mpnPage, index) => ({
-                id: mpnPage.id,
-                title: mpnPage.title,
-                template: 'mpnAnalysisPage',
-                level: 1,
-                pageData: mpnPage,
-                pageType: 'with-margins'  // Page with margins
-            }))
-        ];
+        const pages = [{
+            id: 'about-1buy',
+            title: 'About 1BUY.AI',
+            template: 'about1buy',
+            pageNumber: '03',
+            level: 1,
+            pageType: 'full-bleed'  // Full-bleed page with no margins
+        }, {
+            id: 'about-1buy-page2', title: 'About 1BUY.AI',  // Same title as first page to maintain one TOC entry
+            template: 'about1buy-page2', pageNumber: '04', level: 1, pageType: 'with-margins', hideFromToc: true  // Hide from TOC since it's a continuation of the first page
+        }, {
+            id: 'about-ai',
+            title: 'About Our AI Infrastructure',
+            template: 'aboutAI',
+            pageNumber: '05',
+            level: 1,
+            pageType: 'with-margins'
+        }, {
+            id: 'about-ai2',
+            title: 'About Our AI Infrastructure',
+            template: 'aboutAI-page2',
+            pageNumber: '06',
+            level: 1,
+            pageType: 'full-bleed',
+            hideFromToc: true
+        }, {
+            id: 'ai-muscle-for-bom',
+            title: 'AI Muscle for every BOM: Price Negotiator™',
+            template: 'muscleAI-page',
+            pageNumber: '07',
+            level: 1,
+            pageType: 'with-margins',
+        }, {
+            id: 'ai-muscle-for-bom2',
+            title: 'AI Muscle for every BOM: Price Negotiator™',
+            template: 'muscleAI-page2',
+            pageNumber: '08',
+            level: 1,
+            pageType: 'with-margins',
+            hideFromToc: true
+        }, {
+            id: 'ai-muscle-for-bom3',
+            title: 'AI Muscle for every BOM: Price Negotiator™',
+            template: 'muscleAI-page3',
+            pageNumber: '09',
+            level: 1,
+            pageType: 'with-margins',
+            hideFromToc: true
+        }, {
+            id: 'exec-summary',
+            title: 'Executive Summary',
+            template: 'executiveSummary',
+            pageNumber: '10',
+            level: 1,
+            pageType: 'with-margins'
+        }, {
+            id: 'cost-breakdown',
+            title: 'Detailed Cost Breakdown and Savings Opportunities',
+            template: 'detailedCostBreakdown',
+            pageNumber: '11',
+            level: 2,
+            pageType: 'with-margins'
+        }, {
+            id: 'mpn-savings',
+            title: 'MPN Wise Savings',
+            template: 'mpnWiseSavings',
+            pageNumber: '13',
+            level: 2,
+            pageType: 'with-margins'  // Page with margins
+        }, {
+            id: 'risk-analysis',
+            title: 'Component Risk and Lifecycle Analysis',
+            template: 'componentRiskAnalysis',
+            pageNumber: '14',
+            level: 2,
+            pageType: 'with-margins'  // Page with margins
+        }, ...reportData.mpnAnalysisPages.map((mpnPage, index) => ({
+            id: mpnPage.id,
+            title: mpnPage.title,
+            template: 'mpnAnalysisPage',
+            level: 1,
+            pageData: mpnPage,
+            pageType: 'with-margins'
+        }))];
 
 
-        // Read compiled CSS
         const cssPath = path.join(__dirname, 'public', 'output.css');
         const css = fs.readFileSync(cssPath, 'utf-8');
 
-        // Read image and convert to Base64 for embedding
-        const imagePath = path.join(__dirname, 'public', 'images', 'onebuySphare.png');
-        const imageBase64 = fs.readFileSync(imagePath, 'base64');
-        const imageSrc = `data:image/png;base64,${imageBase64}`;
+        const images = {
+            orbImage: loadImageBase64('onebuySphare.png'),
+            howItWorks: loadImageBase64('howITWork.png'),
+            orbMini: loadImageBase64('orb-mini.png')
+        };
 
-        // Render EJS template
         const templatePath = path.join(__dirname, 'views', 'reportTemplate.ejs');
         const html = await ejs.renderFile(templatePath, {
-            data: reportData, pages: pages, css: css, orbImage: imageSrc
+            data: reportData,
+            pages: pages,
+            css: css,
+            ...images  // Spread all images into the template context
         });
 
-        // Generate PDF
-        const pdfBuffer = await generatePdf(html);
+        const baseUrl = `${req.protocol}://${req.get('host')}`;
+        const pdfBuffer = await generatePdf(html, baseUrl);
 
-        // Sort pages by page number
         pages.sort((a, b) => parseInt(a.pageNumber) - parseInt(b.pageNumber));
-        
+
         // Filter out hidden pages from TOC
         const tocPages = pages.filter(page => !page.hideFromToc);
         res.setHeader('Content-Type', 'application/pdf');
