@@ -234,7 +234,7 @@ app.get('/generate-pdf/:reportId', async (req, res) => {
             template: 'executiveSummary-page5',
             pageNumber: '12',
             level: 1,
-            pageType: 'full-bleed'
+            pageType: 'with-margins'
         }, {
             id: 'cost-breakdown',
             title: 'Detailed Cost Breakdown and Savings Opportunities',
